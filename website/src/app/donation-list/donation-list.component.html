@@ -1,0 +1,39 @@
+<h2>Donation needs:</h2>
+<table>
+  <tr>
+    <th>User</th>
+    <th>Organization</th>
+    <th>Description</th>
+    <th>Desired Quantity</th>
+    <th>Item</th>
+    <th>Status</th>
+  </tr>
+  <tr *ngFor="let donationNeed of DonationNeeds">
+    <td>{{ donationNeed.User.FullName }}</td>
+    <td>{{ donationNeed.User.Organization.Name }}</td>
+    <td>{{ donationNeed.Item.Name }}</td>
+    <td>{{ donationNeed.Item.DesiredQuantity }} </td>
+    <td>{{ donationNeed.Item.UnitDescription }} </td>
+    <td [style.background]="donationNeed.Status.UIColor">{{ donationNeed.Status.Description }}</td>
+  </tr>
+</table>
+<h2>Donation offers:</h2>
+<table>
+  <tr>
+    <th>User</th>
+    <th>Organization</th>
+    <th>Amount</th>
+    <th>Total</th>
+    <th>Claimed</th>
+    <th>Available</th>
+  </tr>
+  <tr *ngFor="let donationOffer of DonationOffers">
+    <td>{{ donationOffer.User.FullName }}</td>
+    <td>{{ donationOffer.User.Organization.Name }}</td>
+    <td>{{ donationOffer.Item.Name }}</td>
+    <!-- TODO The whole notion of a DonationItem's DesiredQuantity is especially misleading in this case, where the item is being offered. -->
+    <td>{{ donationOffer.TotalQuantity }}</td>
+    <td>{{ donationOffer.ClaimedQuantity }}</td>
+    <td>{{ donationOffer.AvailableQuantity }}</td>
+  </tr>
+</table>
