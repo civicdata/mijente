@@ -1,61 +1,30 @@
-<h2>Donate items</h2>
-<form #offerItemsForm="ngForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="firstName">First name:</label>
-    <input type="text" id="firstName" name="firstNameInput"
-           required ngModel />
-  </div>
-  <div>
-    <label for="lastName">Last name:</label>
-    <input type="text" id="lastName" name="lastNameInput"
-           required ngModel />
-  </div>
+<div *ngIf="viewStateService.CurrentUser === null">
+  You must be signed in to donate items. Please log in.
+</div>
+<div *ngIf="viewStateService.CurrentUser !== null">
+  <h2>Donate items</h2>
+  <form #offerItemsForm="ngForm" (ngSubmit)="onSubmit(offerItemsForm.value)">
+    <div>
+      <label>Items:</label>
+      <div *ngFor="let donationItem of donationItems; index as i">
+        <!--[(ngModel)]="donationItem.description"-->
+        <input type="text" ngModel id="item-{{i}}" name="item-{{i}}" />
+        <button (click)="onDeleteItemClick($event, i)">Delete</button>
 
-  <div>
-    <!-- TODO Organization should ideally be an auto-complete field or similar? -->
-    <label for="organization">Organization:</label>
-    <input type="text" id="organization" name="organizationInput"
-           required ngModel />
-  </div>
-
-  <div>
-    <label for="contactEmail">Contact Email:</label>
-    <input type="email" id="contactEmail" name="contactEmailInput"
-           required ngModel />
-  </div>
-  <div>
-    <label for="contactPhone">Contact Phone:</label>
-    <input type="tel" id="contactPhone" name="contactPhoneInput"
-           required ngModel />
-  </div>
-
-  <div>
-    <label>Items:</label>
-    <div *ngFor="let donationItem of donationItems; index as i">
-      <!--[(ngModel)]="donationItem.description"-->
-      <input type="text" ngModel
-             id="item-{{i}}" name="item-{{i}}" />
-      <button (click)="onDeleteItemClick($event, i)">Delete</button>
-
-      <!--name="deleteButton-{{i}}"-->
-      {{ donationItem.description }}
-      |
-      {{ donationItem | json }}
-      |
-      item-{{i}}
+        <!--name="deleteButton-{{i}}"-->
+        {{ donationItem.Description }} | {{ donationItem | json }} | item-{{i}}
+      </div>
+      <button (click)="onAddItemClick($event)">Add</button>
     </div>
-    <button (click)="onAddItemClick($event)">Add</button>
-  </div>
 
-  <div>
-    <label for="donationDescription">Donation description:</label>
-    <textarea rows="4" cols="50" id="donationDescription" name="donationDescriptionInput"
-              required ngModel
-              placeholder="Provide a detailed description of the donation you are offering."></textarea>
-  </div>
+    <div>
+      <label for="donationDescription">Donation description:</label>
+      <textarea rows="4" cols="50" id="donationDescription" name="donationDescriptionInput" required ngModel placeholder="Provide a detailed description of the donation you are offering."></textarea>
+    </div>
 
-  <!--<form (ngSubmit)="onSubmit()" #heroForm="ngForm">-->
-  <button type="submit">Submit donation request</button>
-</form>
+    <!--<form (ngSubmit)="onSubmit()" #heroForm="ngForm">-->
+    <button type="submit">Submit donation request</button>
+  </form>
+</div>
 <!-- TODO A User always belongs to an Organization. Should they sign up,
           and then those fields would be auto-populated? -->

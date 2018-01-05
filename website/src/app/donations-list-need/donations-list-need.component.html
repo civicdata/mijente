@@ -1,45 +1,18 @@
-<h2>List donation need</h2>
-<form #donationNeedForm="ngForm" (ngSubmit)="onSubmit(donationNeedForm.value)">
-  <div>
-    <label for="firstName">First name:</label>
-    <input type="text" id="firstName" name="firstNameInput"
-           required ngModel />
-  </div>
-  <div>
-    <label for="lastName">Last name:</label>
-    <input type="text" id="lastName" name="lastNameInput"
-           required ngModel />
-  </div>
+<div *ngIf="viewStateService.CurrentUser === null">
+  You must be signed in to list a donation need. Please log in.
+</div>
+<div *ngIf="viewStateService.CurrentUser !== null">
+  <h2>List donation need</h2>
+  <form #donationNeedForm="ngForm" (ngSubmit)="onSubmit(donationNeedForm.value)">
+    <div>
+      <label for="itemName">Need description:</label>
+      <input type="text" id="itemName" name="itemInput" required ngModel />
+      <label for="itemQuantity">Quantity:</label>
+      <input type="number" id="itemQuantity" name="itemQuantityInput" required ngModel />
+      <label for="itemUnits">Of what?</label>
+      <input type="text" id="itemUnits" name="itemUnitsInput" required ngModel />
+    </div>
 
-  <div>
-    <!-- TODO Organization should ideally be an auto-complete field or similar? -->
-    <label for="organization">Organization:</label>
-    <input type="text" id="organization" name="organizationInput"
-           required ngModel />
-  </div>
-
-  <div>
-    <label for="contactEmail">Contact Email:</label>
-    <input type="email" id="contactEmail" name="contactEmailInput"
-           required ngModel />
-  </div>
-  <div>
-    <label for="contactPhone">Contact Phone:</label>
-    <input type="tel" id="contactPhone" name="contactPhoneInput"
-           required ngModel />
-  </div>
-
-  <div>
-    <label for="itemName">Need description:</label>
-    <input type="text" id="itemName" name="itemInput"
-           required ngModel />
-    <label for="itemQuantity">Quantity:</label>
-    <input type="number" id="itemQuantity" name="itemQuantityInput"
-           required ngModel />
-    <label for="itemUnits">Of what?</label>
-    <input type="text" id="itemUnits" name="itemUnitsInput"
-          required ngModel />
-  </div>
-
-  <button type="submit">Submit donation request</button>
-</form>
+    <button type="submit">Submit donation request</button>
+  </form>
+</div>

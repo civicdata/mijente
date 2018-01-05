@@ -8,10 +8,16 @@ import { DonationsListNeedComponent } from "./donations-list-need/donations-list
 import { DonationsOfferItemsComponent } from "./donations-offer-items/donations-offer-items.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { DonationItemComponent } from "./donation-item/donation-item.component";
-import { IDonationRepository, IDonationRepositoryToken } from "./donation-repository";
-import { MockDonationRepositoryService } from "./mock-donation-repository.service";
+import {
+  IDonationRepository,
+  IDonationRepositoryToken
+} from "./models/repositories/donation-repository";
+import { MockDonationRepositoryService } from "./models/repositories/mock-donation-repository.service";
 import { OpaqueToken } from "@angular/core";
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from "./register/register.component";
+import { IUserRepositoryToken } from "./models/repositories/user-repository";
+import { MockUserRepository } from "./models/repositories/mock-user-repository";
+import { ViewStateService } from "./view-state-service.service";
 
 @NgModule({
   declarations: [
@@ -22,14 +28,18 @@ import { RegisterComponent } from './register/register.component';
     DonationItemComponent,
     RegisterComponent
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, FormsModule, AppRoutingModule],
   providers: [
-    { provide: IDonationRepositoryToken, useClass: MockDonationRepositoryService }
+    {
+      provide: IDonationRepositoryToken,
+      useClass: MockDonationRepositoryService
+    },
+    {
+      provide: IUserRepositoryToken,
+      useClass: MockUserRepository
+    },
+    ViewStateService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

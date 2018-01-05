@@ -1,14 +1,25 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  ViewChild,
+  Inject
+} from "@angular/core";
+import { ViewStateService } from "../view-state-service.service";
+import { DonationOffer } from "../models/donation-offer";
+import { DonationItem } from "../models/donation-item";
+import {
+  IDonationRepositoryToken,
+  IDonationRepository
+} from "../models/repositories/donation-repository";
 
 @Component({
-  selector: 'app-donations-offer-items',
-  templateUrl: './donations-offer-items.component.html',
-  styleUrls: ['./donations-offer-items.component.css']
+  selector: "app-donations-offer-items",
+  templateUrl: "./donations-offer-items.component.html",
+  styleUrls: ["./donations-offer-items.component.css"]
 })
 export class DonationsOfferItemsComponent implements OnInit {
-
-  @ViewChild("offerItemsForm")
-  offerItemsForm;
+  @ViewChild("offerItemsForm") offerItemsForm;
 
   // TODO IMPORTANT It looks like binding to an array of objects is going to be a big problem.
   //                Instead, we'll have a dynamic set of components.
@@ -16,12 +27,19 @@ export class DonationsOfferItemsComponent implements OnInit {
   // TODO This should be an array of DonationItem objects.
   public donationItems: object[] = [];
 
-  constructor() { }
+  constructor(
+    @Inject(IDonationRepositoryToken)
+    private donationRepository: IDonationRepository,
+    public viewStateService: ViewStateService
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   public onAddItemClick(event) {
-    this.donationItems.push({ index: this.donationItems.length, description: "" });
+    this.donationItems.push({
+      index: this.donationItems.length,
+      description: ""
+    });
     this.offerItemsForm.form.updateValueAndValidity();
   }
 
@@ -40,8 +58,21 @@ export class DonationsOfferItemsComponent implements OnInit {
     this.offerItemsForm.form.updateValueAndValidity();
   }
 
-  public onSubmit() {
+  public onSubmit(formValue: any) {
     console.log(this.offerItemsForm);
     console.log(this.offerItemsForm.form.controls);
+
+    const offer: DonationOffer = new DonationOffer(
+      this.viewStateService.CurrentUser,
+      new DonationItem(
+        formValue.donationDescriptionInput,
+        "10",
+        formValue.donationDescriptionInput
+      ),
+      0,
+      10
+    );
+
+    this.donationRepository.AddOffer(offer);
   }
 }

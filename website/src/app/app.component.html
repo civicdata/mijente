@@ -12,6 +12,14 @@
   |
   <a routerLink="/Donations/OfferItems">Donate items</a>
   |
-  <a routerLink="/Register">Register</a>
+  <span *ngIf="viewStateService.CurrentUser !== null">
+    Welcome, {{ viewStateService.CurrentUser.FirstName }} |
+    <a routerLink="/SignOut">Sign out</a>
+  </span>
+  <span *ngIf="viewStateService.CurrentUser === null">
+    <a routerLink="/Login">Login</a>
+    |
+    <a routerLink="/Register">Register</a>
+  </span>
 </nav>
 <router-outlet></router-outlet>

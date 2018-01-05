@@ -1,10 +1,14 @@
 import { Component, OnInit, ViewChild, Inject } from "@angular/core";
-import { IDonationRepository, IDonationRepositoryToken } from "../donation-repository";
+import {
+  IDonationRepository,
+  IDonationRepositoryToken
+} from "../models/repositories/donation-repository";
 import { DonationNeed } from "../models/donation-need";
 import { User } from "../models/user";
 import { DonationItem } from "../models/donation-item";
 import { DonationStatus } from "../models/donation-status";
 import { Organization } from "../models/organization";
+import { ViewStateService } from "../view-state-service.service";
 
 @Component({
   selector: "app-donations-list-need",
@@ -12,16 +16,20 @@ import { Organization } from "../models/organization";
   styleUrls: ["./donations-list-need.component.css"]
 })
 export class DonationsListNeedComponent {
-
-  constructor(@Inject(IDonationRepositoryToken)
-              private donationRepository: IDonationRepository) { }
+  constructor(
+    @Inject(IDonationRepositoryToken)
+    private donationRepository: IDonationRepository,
+    public viewStateService: ViewStateService
+  ) {}
 
   public onSubmit(formValue: any) {
     const donationNeed = new DonationNeed(
-      new User(formValue.firstNameInput,
-               formValue.lastNameInput,
-               new Organization(formValue.organizationInput)),
-      new DonationItem(formValue.itemInput, formValue.itemQuantityInput, formValue.itemUnitsInput),
+      this.viewStateService.CurrentUser,
+      new DonationItem(
+        formValue.itemInput,
+        formValue.itemQuantityInput,
+        formValue.itemUnitsInput
+      ),
       DonationStatus.NotFulfilled
     );
 
@@ -31,5 +39,4 @@ export class DonationsListNeedComponent {
     // console.log("Contact email: " + formValue.contactEmailInput);
     // console.log("Contact phone: " + formValue.contactPhoneInput);
   }
-
 }
