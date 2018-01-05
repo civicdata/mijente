@@ -11,6 +11,7 @@ import { DonationItemComponent } from "./donation-item/donation-item.component";
 import { IDonationRepository, IDonationRepositoryToken } from "./donation-repository";
 import { MockDonationRepositoryService } from "./mock-donation-repository.service";
 import { OpaqueToken } from "@angular/core";
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { OpaqueToken } from "@angular/core";
     DonationListComponent,
     DonationsListNeedComponent,
     DonationsOfferItemsComponent,
-    DonationItemComponent
+    DonationItemComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
