@@ -1,8 +1,10 @@
 import { DonationNeed } from "../donation-need";
 import { DonationOffer } from "../donation-offer";
-import { OpaqueToken } from "@angular/core";
+import { InjectionToken } from "@angular/core";
 
-export let IDonationRepositoryToken = new OpaqueToken("./donation-repository");
+export let IDonationRepositoryToken = new InjectionToken(
+  "./donation-repository"
+);
 
 export interface IDonationRepository {
   AddNeed(need: DonationNeed);

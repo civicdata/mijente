@@ -13,7 +13,6 @@ import {
   IDonationRepositoryToken
 } from "./models/repositories/donation-repository";
 import { MockDonationRepositoryService } from "./models/repositories/mock-donation-repository.service";
-import { OpaqueToken } from "@angular/core";
 import { RegisterComponent } from "./register/register.component";
 import { IUserRepositoryToken } from "./models/repositories/user-repository";
 import { MockUserRepository } from "./models/repositories/mock-user-repository";
